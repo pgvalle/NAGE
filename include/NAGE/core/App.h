@@ -26,10 +26,32 @@
 #define EXTERN extern
 #endif
 
-/*
+/**
  * API
- */
+*/
 
+/**
+ * imgs: path of the directory where all image resources are located
+ * sfxs: ...
+ * fonts: ...
+ * 
+ * They default to assets/{imgs, sfxs, fonts}/.
+ * You may have directories within those base directories.
+*/
+struct Config {
+  const char *title = "App",
+             *imgs  = "./assets/imgs/",
+             *sfxs  = "./assets/sfxs/",
+             *fonts = "./assets/fonts/";
+
+  Uint16 fps = 60;
+  bool vsync = false;
+  // window dimensions (defaults to a NES-like resolution)
+  int tileSize = 8, wTile = 32, hTile = 30;
+};
+
+void initialize(const Config &conf);
+void terminate();
 // scene is owned by app
 void run(Scene *scene);
 
