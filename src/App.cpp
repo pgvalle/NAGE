@@ -11,47 +11,34 @@
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 
+#include <vector>
+
 /*
  * Private app stuff
  */
 
 static SDL_Window* window;
 static SDL_Renderer *renderer;
-
 // assets
-static SDL_Texture *atlas, *texAtlas;
+static std::vector<SDL_Texture *> atlases;
 
-/*
- * I don't wanna have everything in a really big function
- */
 
-void loadAssets() {
+void initialize(const Config &conf) {
+  const int w = conf.tileSize * conf.wTile,
+            h = conf.tileSize * conf.hTile;
+
   window = SDL_CreateWindow(
     "Space Invaders Clone",
     SDL_WINDOWPOS_CENTERED,
     SDL_WINDOWPOS_CENTERED,
-    2 * WIDTH,
-    2 * HEIGHT,
+    w, h,
     SDL_WINDOW_RESIZABLE
   );
 
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-  SDL_RenderSetVSync(renderer, false);
-  SDL_RenderSetLogicalSize(renderer, WIDTH, HEIGHT); // resolution independent rendering
+  SDL_RenderSetVSync(renderer, conf.vsync);
+  SDL_RenderSetLogicalSize(renderer, w, h); // resolution independent rendering
 
-  // pre-render all ascii characters on a texture
-  TTF_Font *font = TTF_OpenFont(ASSETS_DIR "ps2p.ttf", TILE);
-  
-  char ascii[96] = "";
-  for (char i = 32; i < 127; i++) {
-    ascii[i - 32] = i;
-  }
-
-  SDL_Surface *surface = TTF_RenderUTF8_Solid(font, ascii, {255, 255, 255, 255});
-  texAtlas = SDL_CreateTextureFromSurface(renderer, surface);
-  SDL_FreeSurface(surface);
-
-  TTF_CloseFont(font);
 
   // image assets
   surface = IMG_Load(ASSETS_DIR "atlas.png");
@@ -67,7 +54,7 @@ void loadAssets() {
   shouldClose = false;
 }
 
-void freeAssets() {
+void terminate() {
   // audio assets
 
   // images
