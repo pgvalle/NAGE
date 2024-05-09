@@ -22,4 +22,4 @@ void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 0);
 void setBlend(bool blend);
 
 void renderTile(int x, int y, int AtlasX, int atlasY);
-void renderText(int x, int y, const char *text);
+void renderText(int x, int y, const char *text, ...);
