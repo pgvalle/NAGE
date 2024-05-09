@@ -1,12 +1,12 @@
-#pragma once
-
-#include <SDL.h>
-#include <cstdint>
-
 /**
  * Drawing capabilities. Only apply to things offered by this library.
  * If you use renderer directly, this will not affect it.
  */
+
+#pragma once
+
+#include <SDL.h>
+#include <cstdint>
 
 /**
  * See SDL_RendererFlip enum to know more.
