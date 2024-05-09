@@ -1,6 +1,5 @@
 // no need to redeclare app fields here!
 #define EXTERN
-#define APP_INTERNALS
 
 #include "NAGE/core/App.h"
 
