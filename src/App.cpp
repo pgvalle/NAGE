@@ -4,6 +4,7 @@
 
 #include "App.h"
 
+#include <cstdio>
 #include <cassert>
 #include <cstring>
 
@@ -13,15 +14,10 @@
 
 #include <vector>
 
-/*
- * Private app stuff
- */
-
 static SDL_Window* window;
 static SDL_Renderer *renderer;
 // assets
 static std::vector<SDL_Texture *> atlases;
-
 
 void initialize(const Config &conf) {
   const int w = conf.tileSize * conf.wTile,
@@ -39,15 +35,14 @@ void initialize(const Config &conf) {
   SDL_RenderSetVSync(renderer, conf.vsync);
   SDL_RenderSetLogicalSize(renderer, w, h); // resolution independent rendering
 
-
   // image assets
-  surface = IMG_Load(ASSETS_DIR "atlas.png");
+  surface = IMG_Load(conf.atlas);
   atlas = SDL_CreateTextureFromSurface(renderer, surface);
   SDL_FreeSurface(surface);
 
-  surface = SDL_LoadBMP(ASSETS_DIR "icon.bmp");
-  SDL_SetWindowIcon(window, surface);
-  SDL_FreeSurface(surface);
+  // surface = SDL_LoadBMP(ASSETS_DIR "icon.bmp");
+  // SDL_SetWindowIcon(window, surface);
+  // SDL_FreeSurface(surface);
 
   // audio assets
 
@@ -58,17 +53,13 @@ void terminate() {
   // audio assets
 
   // images
-  SDL_DestroyTexture(texAtlas);
-  SDL_DestroyTexture(atlas);
+  //SDL_DestroyTexture(texAtlas);
+  //SDL_DestroyTexture(atlas);
 
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 }
 
-/*
- * here it comes what is in header
- */
-#include <cstdio>
 void run(Scene *scene) {
   assert(scene);
 
@@ -90,7 +81,7 @@ void run(Scene *scene) {
     }
 
     scene->render(renderer);
-    scene->update(1e-3 * delta); // delta in seconds
+    scene->update(1e-3f * delta); // delta in seconds
 
     SDL_RenderPresent(renderer);
 

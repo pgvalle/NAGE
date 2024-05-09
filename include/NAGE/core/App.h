@@ -1,25 +1,8 @@
 #pragma once
 
-#include "scenes/Scene.h"
+#include "Scene.h"
 
 #include <SDL.h>
-
-/*
- * Useful aliases
- */
-
-#define FPS 60
-#define FRAME_DELAY (1000 / FPS)
-
-#ifndef ASSETS_DIR
-#define ASSETS_DIR "./res/"
-#endif
-
-#define TILE 8
-
-// These are the dimensions of the canvas. NOT of the window.
-#define WIDTH  (28 * TILE) // 224
-#define HEIGHT (32 * TILE) // 240
 
 // no need to redeclare variables in App.cpp file again
 #ifndef EXTERN
@@ -27,28 +10,20 @@
 #endif
 
 /**
- * API
+ * Setup app
+ * sfxPath: path to a directory
 */
+struct Config
+{
+  const char *title = "Application";
+  const char *fontPath, *atlasPath, *sfxPath;
+  int fps = 30;
+  int tileSize = 8, wTiles = 32, hTiles = 30;
+};
 
 /**
- * imgs: path of the directory where all image resources are located
- * sfxs: ...
- * fonts: ...
- * 
- * They default to assets/{imgs, sfxs, fonts}/.
- * You may have directories within those base directories.
+ * API
 */
-struct Config {
-  const char *title = "App",
-             *imgs  = "./assets/imgs/",
-             *sfxs  = "./assets/sfxs/",
-             *fonts = "./assets/fonts/";
-
-  Uint16 fps = 60;
-  bool vsync = false;
-  // window dimensions (defaults to a NES-like resolution)
-  int tileSize = 8, wTile = 32, hTile = 30;
-};
 
 void initialize(const Config &conf);
 void terminate();
@@ -60,8 +35,7 @@ EXTERN bool shouldClose;
 
 bool isKeyPressed(int key);
 
-void renderText(int x, int y, const char *text,
-                SDL_Color color = {255, 255, 255, 255});
+void renderTile(int x, int y, int id);
 void renderClip(int x, int y, const SDL_Rect &clip);
 
 #undef EXTERN
