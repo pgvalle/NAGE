@@ -6,7 +6,7 @@ cd $(dirname $0)
 # Specify the directory containing your .cpp files
 SOURCE_DIR="src"
 BUILD_DIR="build"
-FLAGS="-Wall -std=c++23 -I./include $(pkg-config --cflags sdl2 SDL2_image SDL2_ttf)"
+FLAGS="-Wall -std=c++23 -Iinclude -Ideps/SDL_FontCache $(pkg-config --cflags sdl2 SDL2_image SDL2_ttf)"
 LIBS="$(pkg-config --libs sdl2 SDL2_image SDL2_ttf)"
 
 find_src_files() {
