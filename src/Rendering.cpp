@@ -36,18 +36,19 @@ void setBlend(bool blend)
 
 void toggleUserCtx()
 {
+  static SDL_BlendMode usrBlend;
+  static Uint8 usrR, usrG, usrB, usrA;
+
   static bool userCtxOn = true; // first call is to save user ctx
-  static SDL_BlendMode userBlend;
-  static Uint8 r, g, b, a;
   if (userCtxOn)
   {
-    SDL_GetRenderDrawBlendMode(renderer, &userBlend);
-    SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+    SDL_GetRenderDrawBlendMode(renderer, &usrBlend);
+    SDL_GetRenderDrawColor(renderer, &usrR, &usrG, &usrB, &usrA);
   }
   else
   {
-    SDL_SetRenderDrawBlendMode(renderer, userBlend);
-    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+    SDL_SetRenderDrawBlendMode(renderer, usrBlend);
+    SDL_SetRenderDrawColor(renderer, usrR, usrG, usrB, usrA);
   }
 
   userCtxOn = !userCtxOn;
