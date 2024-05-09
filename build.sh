@@ -16,7 +16,7 @@ find_src_files() {
 # Create a directory to store compiled files (if it doesn't exist)
 mkdir -p $BUILD_DIR
 
-src_files=$(find_src_files)
+src_files="$(find_src_files) deps/SDL_FontCache/SDL_FontCache.c"
 obj_files=""
 
 # Compile each .cpp file only if it has changed
