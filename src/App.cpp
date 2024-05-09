@@ -1,7 +1,7 @@
 // no need to redeclare app fields here!
 #define EXTERN
 
-#include "NAGE/core/App.h"
+#include "NAGE/App.h"
 
 #include <cstdio>
 #include <cassert>
@@ -10,34 +10,43 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
+#include <SDL_FontCache.h>
 
 #include <vector>
 
-static SDL_Window* window;
-static SDL_Renderer *renderer;
-// assets
-static std::vector<SDL_Texture *> atlases;
+SDL_Window *window;
+SDL_Renderer *renderer;
 
-void initialize(const Config &conf) {
-  const int w = conf.tileSize * conf.wTile,
-            h = conf.tileSize * conf.hTile;
+SDL_Texture *atlas;
+FC_Font *font;
+
+void initialize(const Config &conf)
+{
+  SDL_Init(SDL_INIT_EVERYTHING);
+  TTF_Init();
+  IMG_Init(IMG_INIT_PNG);
+
+  const int w = conf.tileSize * conf.wTiles,
+            h = conf.tileSize * conf.hTiles;
 
   window = SDL_CreateWindow(
-    "Space Invaders Clone",
-    SDL_WINDOWPOS_CENTERED,
-    SDL_WINDOWPOS_CENTERED,
-    w, h,
-    SDL_WINDOW_RESIZABLE
-  );
+      "Space Invaders Clone",
+      SDL_WINDOWPOS_CENTERED,
+      SDL_WINDOWPOS_CENTERED,
+      w, h,
+      SDL_WINDOW_RESIZABLE);
 
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-  SDL_RenderSetVSync(renderer, conf.vsync);
+  SDL_RenderSetVSync(renderer, false);
   SDL_RenderSetLogicalSize(renderer, w, h); // resolution independent rendering
 
   // image assets
-  surface = IMG_Load(conf.atlas);
+  SDL_Surface *surface = IMG_Load(conf.atlasPath);
   atlas = SDL_CreateTextureFromSurface(renderer, surface);
   SDL_FreeSurface(surface);
+
+  font = FC_CreateFont();  
+  FC_LoadFont(font, renderer, conf.fontPath, conf.tileSize, {0, 0, 0, 255}, TTF_STYLE_NORMAL);
 
   // surface = SDL_LoadBMP(ASSETS_DIR "icon.bmp");
   // SDL_SetWindowIcon(window, surface);
@@ -48,18 +57,25 @@ void initialize(const Config &conf) {
   shouldClose = false;
 }
 
-void terminate() {
+void terminate()
+{
   // audio assets
 
   // images
-  //SDL_DestroyTexture(texAtlas);
-  //SDL_DestroyTexture(atlas);
+  // SDL_DestroyTexture(texAtlas);
+  // SDL_DestroyTexture(atlas);
+  FC_FreeFont(font);
 
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
+
+  IMG_Quit();
+  TTF_Quit();
+  SDL_Quit();
 }
 
-void run(Scene *scene) {
+void run(Scene *scene)
+{
   assert(scene);
 
   // only one run() in stack
@@ -67,15 +83,15 @@ void run(Scene *scene) {
   assert(!running);
   running = true;
 
-  loadAssets();
-  
   Uint32 delta = 0;
-  while (!shouldClose) {
+  while (!shouldClose)
+  {
     const Uint32 start = SDL_GetTicks();
 
     // query and process events
     SDL_Event event;
-    if (SDL_WaitEventTimeout(&event, FRAME_DELAY)) {
+    if (SDL_WaitEventTimeout(&event, 16))
+    {
       scene->processEvent(event);
     }
 
@@ -84,38 +100,17 @@ void run(Scene *scene) {
 
     SDL_RenderPresent(renderer);
 
-    // we want FRAME_DELAY seconds
+    // we want 16 seconds
     const Uint32 realDelta = SDL_GetTicks() - start;
-    if (realDelta < FRAME_DELAY) {
-      SDL_Delay(FRAME_DELAY - realDelta);
+    if (realDelta < 16)
+    {
+      SDL_Delay(16 - realDelta);
     }
-    // now we should get around FRAME_DELAY seconds
+    // now we should get around 16 seconds
     delta = SDL_GetTicks() - start;
   }
 
   delete scene;
 
-  freeAssets();
   running = false;
 }
-
-bool isKeyPressed(int key) {
-  const Uint8 *keys = SDL_GetKeyboardState(nullptr);
-  return keys[key];
-}
-
-void renderClip(int x, int y, const SDL_Rect &clip) {
-  const SDL_Rect scale = {x, y, clip.w, clip.h};
-  SDL_RenderCopy(renderer, atlas, &clip, &scale);
-}
-
-void renderText(int x, int y, const char *text, SDL_Color color) {
-  for (int i = 0; i < (int)strlen(text); i++) {
-    const char c = text[i] - 32; // printable characters only
-
-    const SDL_Rect srcRect = {TILE * c, 0, TILE, TILE};
-    const SDL_Rect dstRect = {x + TILE * i, y, TILE, TILE};
-    SDL_RenderCopy(renderer, texAtlas, &srcRect, &dstRect);
-  }
-}
-
