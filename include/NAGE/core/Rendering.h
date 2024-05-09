@@ -6,12 +6,12 @@
 /**
  * Drawing capabilities. Only apply to things offered by this library.
  * If you use renderer directly, this will not affect it.
-*/
+ */
 
 /**
  * See SDL_RendererFlip enum to know more.
  * Flips are applied after rotation
-*/
+ */
 void setFlip(SDL_RendererFlip flip);
 
 // ARGB format
