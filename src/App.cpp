@@ -2,7 +2,7 @@
 #define EXTERN
 #define APP_INTERNALS
 
-#include "App.h"
+#include "NAGE/core/App.h"
 
 #include <cstdio>
 #include <cassert>
