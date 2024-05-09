@@ -1,11 +1,13 @@
 #pragma once
 
-class Timer {
+class Timer
+{
 private:
   float elapsed = 0, timeout = 0;
 
 public:
-  bool hasTimedOut() const {
+  bool hasTimedOut() const
+  {
     return timeout <= elapsed;
   }
 

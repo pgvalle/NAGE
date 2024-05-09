@@ -4,10 +4,10 @@
 
 /**
  * All scenes, but the main one, have a parent.
- * 
+ *
  * You implement your own main scene:
  *   class MainScene : public Scene
- * 
+ *
  * The parenting thing is to allow data access without passing as argument:
  *   childscene::childscene(Scene *urmum) {
  *     this->parent = urmum;
@@ -16,8 +16,9 @@
  *   void childscene::update(float delta) {
  *     this->parent->field.doSmth();
  *   }
-*/
-class Scene {
+ */
+class Scene
+{
 protected:
   Scene *parent = nullptr;
 

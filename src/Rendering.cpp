@@ -15,8 +15,8 @@ void setFlip(SDL_RendererFlip flip)
 
 void setColor(uint32_t color)
 {
-  _b = Uint8((color >>  0) & 0xff);
-  _g = Uint8((color >>  8) & 0xff);
+  _b = Uint8((color >> 0) & 0xff);
+  _g = Uint8((color >> 8) & 0xff);
   _r = Uint8((color >> 16) & 0xff);
   _a = Uint8((color >> 24) & 0xff);
 }
