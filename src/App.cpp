@@ -20,17 +20,21 @@ SDL_Renderer *renderer;
 SDL_Texture *atlas;
 FC_Font *font;
 
+Config config;
+
 void initialize(const Config &conf)
 {
   SDL_Init(SDL_INIT_EVERYTHING);
   TTF_Init();
   IMG_Init(IMG_INIT_PNG);
 
+  config = conf;
+
   const int w = conf.tileSize * conf.wTiles,
             h = conf.tileSize * conf.hTiles;
 
   window = SDL_CreateWindow(
-      "Space Invaders Clone",
+      conf.title,
       SDL_WINDOWPOS_CENTERED,
       SDL_WINDOWPOS_CENTERED,
       w, h,
@@ -45,8 +49,9 @@ void initialize(const Config &conf)
   atlas = SDL_CreateTextureFromSurface(renderer, surface);
   SDL_FreeSurface(surface);
 
-  font = FC_CreateFont();  
-  FC_LoadFont(font, renderer, conf.fontPath, conf.tileSize, {0, 0, 0, 255}, TTF_STYLE_NORMAL);
+  font = FC_CreateFont();
+  FC_LoadFont(font, renderer, conf.fontPath, conf.tileSize,
+              {255, 255, 255, 255}, TTF_STYLE_NORMAL);
 
   // surface = SDL_LoadBMP(ASSETS_DIR "icon.bmp");
   // SDL_SetWindowIcon(window, surface);
@@ -96,7 +101,7 @@ void run(Scene *scene)
     }
 
     scene->render(renderer);
-    scene->update(1e-3f * delta); // delta in seconds
+    scene->update(1e-3f * delta); // pass delta in seconds
 
     SDL_RenderPresent(renderer);
 
@@ -106,7 +111,7 @@ void run(Scene *scene)
     {
       SDL_Delay(16 - realDelta);
     }
-    // now we should get around 16 seconds
+    // now we should get around 16 ms
     delta = SDL_GetTicks() - start;
   }
 
