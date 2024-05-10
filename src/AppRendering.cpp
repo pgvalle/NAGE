@@ -85,6 +85,7 @@ void renderTile(int x, int y, int AtlasX, int atlasY)
   toggleUserCtx(); // restore
 }
 
+
 void renderText(int x, int y, const char *text, ...)
 {
   toggleUserCtx();
@@ -92,10 +93,12 @@ void renderText(int x, int y, const char *text, ...)
   SDL_SetRenderDrawBlendMode(renderer, _blend ? SDL_BLENDMODE_BLEND : SDL_BLENDMODE_NONE);
   SDL_SetRenderDrawColor(renderer, _r, _g, _b, _a);
 
+  static char buffer[1024];
   va_list args;
   va_start(args, text);
-  FC_Draw(font, renderer, x, y, text, args);
+  vsprintf(buffer, text, args);
   va_end(args);
+  FC_Draw(font, renderer, x, y, buffer);
 
   toggleUserCtx();
 }
