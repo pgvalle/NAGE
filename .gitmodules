@@ -1,3 +1,0 @@
-[submodule "deps/SDL_FontCache"]
-	path = deps/SDL_FontCache
-	url = https://github.com/nikita-yfh/SDL_FontCache
