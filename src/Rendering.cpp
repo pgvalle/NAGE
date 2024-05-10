@@ -24,11 +24,6 @@ Uint8 _r = 0,
 SDL_RendererFlip _flip = SDL_FLIP_NONE;
 bool _blend = false;
 
-void setFlip(SDL_RendererFlip flip)
-{
-  _flip = flip;
-}
-
 void setColor(Uint32 color)
 {
   _b = Uint8((color >>  0) & 0xff);
@@ -43,6 +38,11 @@ void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
   _g = g;
   _r = r;
   _a = a;
+}
+
+void setFlip(SDL_RendererFlip flip)
+{
+  _flip = flip;
 }
 
 void setBlend(bool blend)
