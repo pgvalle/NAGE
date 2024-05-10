@@ -6,8 +6,7 @@ cd $(dirname $0)
 # Specify the directory containing your .cpp files
 SOURCE_DIR="src"
 BUILD_DIR="build"
-FLAGS="-Wall -std=c++23 -Iinclude -Ideps/SDL_FontCache $(pkg-config --cflags sdl2 SDL2_image SDL2_ttf)"
-LIBS="$(pkg-config --libs sdl2 SDL2_image SDL2_ttf)"
+FLAGS="-Wall -std=c++23 -Iinclude -Ideps $(pkg-config --cflags sdl2 SDL2_image SDL2_ttf)"
 
 find_src_files() {
     find $SOURCE_DIR -type f -name '*.cpp'
@@ -38,5 +37,5 @@ for src in $src_files; do
 done
 
 # Create a static library from all compiled files
-ar rcs libsic.a $obj_files
+ar rcs libnage.a $obj_files
 

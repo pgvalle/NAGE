@@ -2,7 +2,7 @@
 
 #include <cstdarg>
 
-#include <SDL_FontCache.h>
+#include <SDL_FontCache/SDL_FontCache.h>
 
 /**
  * External dependencies
