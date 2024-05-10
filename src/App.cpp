@@ -16,22 +16,25 @@
 
 SDL_Window *window;
 SDL_Renderer *renderer;
-
+// assets
 SDL_Texture *atlas;
 FC_Font *font;
-
-Config config;
+int fps;
+int tileSize;
 
 void initialize(const Config &conf)
 {
+  assert(fps);
+
   SDL_Init(SDL_INIT_EVERYTHING);
   TTF_Init();
   IMG_Init(IMG_INIT_PNG);
 
-  config = conf;
+  fps = conf.fps;
+  tileSize = conf.tileSize;
 
-  const int w = conf.tileSize * conf.wTiles,
-            h = conf.tileSize * conf.hTiles;
+  const int w = tileSize * conf.wTiles,
+            h = tileSize * conf.hTiles;
 
   window = SDL_CreateWindow(
       conf.title,
@@ -50,7 +53,7 @@ void initialize(const Config &conf)
   SDL_FreeSurface(surface);
 
   font = FC_CreateFont();
-  FC_LoadFont(font, renderer, conf.fontPath, conf.tileSize,
+  FC_LoadFont(font, renderer, conf.fontPath, tileSize,
               {255, 255, 255, 255}, TTF_STYLE_NORMAL);
 
   // surface = SDL_LoadBMP(ASSETS_DIR "icon.bmp");
@@ -66,9 +69,8 @@ void terminate()
 {
   // audio assets
 
-  // images
   // SDL_DestroyTexture(texAtlas);
-  // SDL_DestroyTexture(atlas);
+  SDL_DestroyTexture(atlas);
   FC_FreeFont(font);
 
   SDL_DestroyRenderer(renderer);
@@ -88,6 +90,7 @@ void run(Scene *scene)
   assert(!running);
   running = true;
 
+  const Uint32 msPerFrame = 1000 / fps;
   Uint32 delta = 0;
   while (!shouldClose)
   {
@@ -95,7 +98,7 @@ void run(Scene *scene)
 
     // query and process events
     SDL_Event event;
-    if (SDL_WaitEventTimeout(&event, 16))
+    if (SDL_WaitEventTimeout(&event, msPerFrame))
     {
       scene->processEvent(event);
     }
@@ -105,13 +108,13 @@ void run(Scene *scene)
 
     SDL_RenderPresent(renderer);
 
-    // we want 16 seconds
+    // we want msPerFrame seconds
     const Uint32 realDelta = SDL_GetTicks() - start;
-    if (realDelta < 16)
+    if (realDelta < msPerFrame)
     {
-      SDL_Delay(16 - realDelta);
+      SDL_Delay(msPerFrame - realDelta);
     }
-    // now we should get around 16 ms
+    // now we should get around msPerFrame ms
     delta = SDL_GetTicks() - start;
   }
 
