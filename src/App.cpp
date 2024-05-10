@@ -1,7 +1,7 @@
 // no need to redeclare app fields here!
 #define EXTERN
 
-#include "NAGE/App.h"
+#include "App.h"
 
 #include <ctime>
 #include <cstdio>

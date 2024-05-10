@@ -1,4 +1,4 @@
-#include "NAGE/Timer.h"
+#include "Timer.h"
 
 void Timer::update(float delta)
 {
