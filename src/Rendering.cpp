@@ -73,14 +73,14 @@ void toggleUserCtx()
 
 void renderTile(int x, int y, int AtlasX, int atlasY)
 {
-  const SDL_Rect srcRect = {AtlasX, atlasY, 8, 8},
-                 dstRect = {x, y, 8, 8};
-
   toggleUserCtx(); // save
 
   SDL_SetRenderDrawBlendMode(renderer, _blend ? SDL_BLENDMODE_BLEND : SDL_BLENDMODE_NONE);
   SDL_SetRenderDrawColor(renderer, _r, _g, _b, _a);
-  SDL_RenderCopyEx(renderer, atlas, &srcRect, &dstRect, 0, nullptr, _flip);
+
+  const SDL_Rect src = {AtlasX, atlasY, 8, 8}, 
+                 dst = {x, y, 8, 8};
+  SDL_RenderCopyEx(renderer, atlas, &src, &dst, 0, nullptr, _flip);
 
   toggleUserCtx(); // restore
 }
@@ -94,7 +94,7 @@ void renderText(int x, int y, const char *text, ...)
 
   va_list argList;
   va_start(argList, text);
-  FC_Draw(font, renderer, 0, 0, text, argList);
+  FC_Draw(font, renderer, x, y, text, argList);
   va_end(argList);
 
   toggleUserCtx();
