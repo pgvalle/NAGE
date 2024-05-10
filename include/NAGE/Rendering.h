@@ -6,17 +6,13 @@
 #pragma once
 
 #include <SDL.h>
-#include <cstdint>
 
-/**
- * See SDL_RendererFlip enum to know more.
- * Flips are applied after rotation
- */
+// See SDL_RendererFlip enum to know more
 void setFlip(SDL_RendererFlip flip);
 
-// ARGB format
+// 0xAARRGGBB
 void setColor(Uint32 color);
-void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 0);
+void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255);
 
 // to use palettes
 void setBlend(bool blend);
