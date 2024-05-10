@@ -3,6 +3,7 @@
 
 #include "NAGE/App.h"
 
+#include <ctime>
 #include <cstdio>
 #include <cassert>
 #include <cstring>
@@ -24,12 +25,13 @@ int tileSize;
 
 void initialize(const Config &conf)
 {
-  assert(conf.fps);
-
   SDL_Init(SDL_INIT_EVERYTHING);
   TTF_Init();
   IMG_Init(IMG_INIT_PNG);
 
+  srand(time(nullptr));
+
+  assert(conf.fps);
   fps = conf.fps;
   tileSize = conf.tileSize;
 
