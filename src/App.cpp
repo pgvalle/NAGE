@@ -24,7 +24,7 @@ int tileSize;
 
 void initialize(const Config &conf)
 {
-  assert(fps);
+  assert(conf.fps);
 
   SDL_Init(SDL_INIT_EVERYTHING);
   TTF_Init();
