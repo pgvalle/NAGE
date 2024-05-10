@@ -1,4 +1,4 @@
-#include "NAGE/Rendering.h"
+#include "NAGE/App.h"
 
 #include <cstdarg>
 
