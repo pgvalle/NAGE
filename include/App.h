@@ -14,7 +14,7 @@
 struct Config
 {
   const char *title = "Application";
-  const char *fontPath, *atlasPath, *sfxPath;
+  const char *atlasPath, *fontPath, *sfxPath;
   int fps = 30;
   int tileSize = 8, wTiles = 32, hTiles = 30;
 };
