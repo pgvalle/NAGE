@@ -8,6 +8,13 @@ SOURCE_DIR="src"
 BUILD_DIR="build"
 FLAGS="-Wall -Iinclude -Ideps $(pkg-config --cflags sdl2 SDL2_image SDL2_ttf)"
 
+# If the first argument is "clean", then clean the build directory
+if [ "$1" == "clean" ]; then
+    echo "Cleaning build directory..."
+    rm -rf "$BUILD_DIR"
+    exit 0
+fi
+
 find_src_files() {
     find $SOURCE_DIR -type f -name '*.cpp'
 }
