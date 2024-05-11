@@ -23,7 +23,7 @@ FC_Font *font;
 int fps;
 int tileSize;
 
-void initialize(const Config &conf)
+void configure(const Config &conf)
 {
   SDL_Init(SDL_INIT_EVERYTHING);
   TTF_Init();
@@ -57,6 +57,10 @@ void initialize(const Config &conf)
   font = FC_CreateFont();
   FC_LoadFont(font, renderer, conf.fontPath, tileSize,
               {255, 255, 255, 255}, TTF_STYLE_NORMAL);
+
+  surface = IMG_Load(conf.atlasPath);
+  atlas = SDL_CreateTextureFromSurface(renderer, surface);
+  SDL_FreeSurface(surface);
 
   // surface = SDL_LoadBMP(ASSETS_DIR "icon.bmp");
   // SDL_SetWindowIcon(window, surface);

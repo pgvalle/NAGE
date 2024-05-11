@@ -24,7 +24,7 @@ struct Config
  * API
  */
 
-void initialize(const Config &conf);
+void configure(const Config &conf);
 void terminate();
 // scene is owned by app
 void run(Scene *scene);
