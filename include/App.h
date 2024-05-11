@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _APP_
+#define _APP_
 
 #include "Scene.h"
 
@@ -50,3 +51,5 @@ void renderTile(int x, int y, int AtlasX, int atlasY);
 void renderText(int x, int y, const char *text, ...);
 
 #undef EXTERN
+
+#endif /* _APP_ */

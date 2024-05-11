@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SCENE_
+#define _SCENE_
 
 #include <SDL.h>
 
@@ -29,3 +30,5 @@ public:
   virtual void update(float delta) = 0;
   virtual void render(SDL_Renderer *renderer) = 0;
 };
+
+#endif /* _SCENE_ */

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef INCLUDE_TIMER
+#define INCLUDE_TIMER
 
 class Timer
 {
@@ -14,3 +15,5 @@ public:
   void update(float delta);
   void reset(float newTimeout = 0);
 };
+
+#endif /* INCLUDE_TIMER */
