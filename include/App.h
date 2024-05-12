@@ -29,6 +29,16 @@ void terminate();
 // scene is owned by app
 void run(Scene *scene);
 
+/**
+ * Push a user defined event holding arbitrary data.
+ * The memory is copied, so don't worry. The copy is owned by the event.
+ * To free the data held by the event, call freeUserEventData.
+ * NOTE: sizeof(data) is up to you to remember
+*/
+void pushUserEvent(int code, void *data, size_t dataSize);
+// Allocator-carefree manner to free event data.
+void freeUserEventData(const SDL_UserEvent &event);
+
 // so that scenes can close app
 EXTERN bool shouldClose;
 
