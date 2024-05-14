@@ -45,7 +45,7 @@ namespace App
   }
 
   template<class T>
-  T getUserEventData(const SDL_UserEvent &event, size_t offset)
+  static inline T getUserEventData(const SDL_UserEvent &event, size_t offset)
   {
     return *(T *)(event.data1 + offset);
   }
