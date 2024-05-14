@@ -33,6 +33,10 @@ namespace App
    * Be aware that if an user defined event isn't processed, it will be discarted.
    */
   bool pushUserEvent(int code, void *data, size_t dataLen);
+  bool pushEvent(const SDL_Event &event)
+  {
+    return SDL_PushEvent((SDL_Event *)&event);
+  }
 
   template<class T>
   T getUserEventData(const SDL_UserEvent &event, size_t offset = 0)
