@@ -141,11 +141,3 @@ bool pushUserEvent(int code, void *data, size_t dataLen)
 
   return (bool)SDL_PushEvent((SDL_Event *)&event);
 }
-
-void freeUserEventData(const SDL_UserEvent &event)
-{
-  if (event.data1)
-  {
-    free(event.data1);
-  }
-}
