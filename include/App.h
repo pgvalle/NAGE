@@ -46,6 +46,11 @@ static inline T get##T##FromUserEvent(const SDL_UserEvent &event, size_t offset)
   return *(T *)(event.data1 + offset);\
 }
 
+USER_EVENT_GET_TYPE(Uint8);
+USER_EVENT_GET_TYPE(Uint16);
+USER_EVENT_GET_TYPE(Uint32);
+USER_EVENT_GET_TYPE(Uint64);
+
 /**
  * Rendering capabilities. Only apply to things offered by this library.
  * If you use renderer directly, this will not affect it.
