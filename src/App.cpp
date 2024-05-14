@@ -163,7 +163,7 @@ bool pushUserEvent(int code, void *data, size_t dataLen)
   event.code = code;
   event.data1 = copy;
 
-  return (bool)SDL_PushEvent((SDL_UserEvent *)&event);
+  return (bool)SDL_PushEvent((SDL_Event *)&event);
 }
 
 void freeUserEventData(SDL_UserEvent &event)
