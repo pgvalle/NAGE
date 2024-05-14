@@ -26,6 +26,8 @@ namespace App
    * EVENT API
    */
 
+  #define SCENE_CHANGE 0xfacada
+
   /**
    * The data is copied, saved in userevent.data1 and the event owns the copy.
    * Be aware that if an user defined event isn't processed, it will be discarted.
@@ -37,7 +39,7 @@ namespace App
   }
 
   template<class T>
-  T getUserEventData(const SDL_UserEvent &event, size_t offset)
+  T getUserEventData(const SDL_UserEvent &event, size_t offset = 0)
   {
     return *(T *)(event.data1 + offset);
   }
