@@ -33,15 +33,18 @@ void run(Scene *scene);
 EXTERN bool shouldClose;
 
 /**
- * EVENT SIGNALING API
+ * EVENT API
  */
 
 /**
- * Data is copied and copy is owned by event.
- * If you want to push non-user events, use SDL_PushEvent directly.
+ * The data is copied, saved in userevent.data1 and the event owns the copy.
+ * Be aware that if an user defined event isn't processed, it will be discarted.
  */
 bool pushUserEvent(int code, void *data, size_t dataLen);
-void freeUserEventData(const SDL_UserEvent &event);
+static inline bool pushEvent(const SDL_Event &event)
+{
+  return SDL_PushEvent((SDL_Event *)&event);
+}
 
 // offset is given in bytes
 #define getUserEventData(event, dtype, offset) (*(dtype *)(event.data1 + offset))
