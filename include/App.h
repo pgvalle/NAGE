@@ -3,11 +3,6 @@
 
 #include "Scene.h"
 
-// no need to redeclare variables in App.cpp file again
-#ifndef EXTERN
-#define EXTERN extern
-#endif
-
 namespace App
 {
   /**
@@ -26,9 +21,6 @@ namespace App
   void terminate();
   // scene is owned by app
   void run(Scene *scene);
-
-  // so that scenes can close app
-  EXTERN bool shouldClose;
 
   /**
    * EVENT API
@@ -52,7 +44,7 @@ namespace App
 
   /**
    * RENDERING API
-   * Just worry about using SDL_Renderer directly if you're thinking of using multithreading.
+   * Just worry about using SDL_Renderer directly if you're thinking of using threads.
    */
 
   // 0xAARRGGBB
@@ -68,7 +60,5 @@ namespace App
   void renderTile(int x, int y, int AtlasX, int atlasY);
   void renderText(int x, int y, const char *text, ...);
 }
-
-#undef EXTERN
 
 #endif /* _APP_ */
