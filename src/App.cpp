@@ -2,10 +2,10 @@
 #define EXTERN
 
 #include "App.h"
+#include "AppGlobals.h"
 
 #include <ctime>
 #include <cstdio>
-#include <cstdlib>
 #include <cassert>
 
 #include <SDL.h>
@@ -13,21 +13,7 @@
 #include <SDL_image.h>
 #include <SDL_FontCache/SDL_FontCache.h>
 
-#include <vector>
-
-/**
- * Renderer.cpp
- */
-
-extern SDL_Renderer *renderer;
-extern SDL_Texture *atlas;
-extern FC_Font *font;
-
-SDL_Window *window;
-int fps;
-int tileSize;
-
-void App::configure(const Config &conf)
+void App::init()
 {
   SDL_Init(SDL_INIT_EVERYTHING);
   TTF_Init();
@@ -35,51 +21,18 @@ void App::configure(const Config &conf)
 
   srand(time(nullptr));
 
-  assert(conf.fps);
-  fps = conf.fps;
-  tileSize = conf.tileSize;
-
-  const int w = tileSize * conf.wTiles,
-            h = tileSize * conf.hTiles;
-
   window = SDL_CreateWindow(
-      conf.title,
-      SDL_WINDOWPOS_CENTERED,
-      SDL_WINDOWPOS_CENTERED,
-      w, h,
+      "Application",
+      SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+      50 * tileSize, 28 * tileSize,
       SDL_WINDOW_RESIZABLE);
 
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   SDL_RenderSetVSync(renderer, false);
-  SDL_RenderSetLogicalSize(renderer, w, h); // resolution independent rendering
-
-  // image assets
-  SDL_Surface *surface = IMG_Load(conf.atlasPath);
-  atlas = SDL_CreateTextureFromSurface(renderer, surface);
-  SDL_FreeSurface(surface);
-
-  font = FC_CreateFont();
-  FC_LoadFont(font, renderer, conf.fontPath, tileSize,
-              {255, 255, 255, 255}, TTF_STYLE_NORMAL);
-
-  surface = IMG_Load(conf.atlasPath);
-  atlas = SDL_CreateTextureFromSurface(renderer, surface);
-  SDL_FreeSurface(surface);
-
-  // surface = SDL_LoadBMP(ASSETS_DIR "icon.bmp");
-  // SDL_SetWindowIcon(window, surface);
-  // SDL_FreeSurface(surface);
-
-  // audio assets
-
-  shouldClose = false;
 }
 
-void App::terminate()
+void quit()
 {
-  // audio assets
-
-  // SDL_DestroyTexture(texAtlas);
   SDL_DestroyTexture(atlas);
   FC_FreeFont(font);
 
@@ -102,7 +55,7 @@ void App::run(Scene *scene)
 
   const Uint32 msPerFrame = 1000 / fps;
   Uint32 delta = 0;
-  while (!shouldClose)
+  while (true)
   {
     const Uint32 start = SDL_GetTicks();
 

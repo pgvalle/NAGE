@@ -1,46 +1,43 @@
 #include "App.h"
+#include "AppGlobals.h"
 
 #include <cstdarg>
 
 #include <SDL_FontCache/SDL_FontCache.h>
 
-SDL_Renderer *renderer;
-SDL_Texture *atlas;
-FC_Font *font;
+Uint8 r = 0,
+      g = 0,
+      b = 0,
+      a = 0xff;
 
-Uint8 _r = 0,
-      _g = 0,
-      _b = 0,
-      _a = 0xff;
+SDL_RendererFlip flip = SDL_FLIP_NONE;
 
-SDL_RendererFlip _flip = SDL_FLIP_NONE;
-
-bool _blend = false;
+bool blend = false;
 
 void App::setColor(Uint32 color)
 {
-  _b = Uint8((color >>  0) & 0xff);
-  _g = Uint8((color >>  8) & 0xff);
-  _r = Uint8((color >> 16) & 0xff);
-  _a = Uint8((color >> 24) & 0xff);
+  b = Uint8((color >>  0) & 0xff);
+  g = Uint8((color >>  8) & 0xff);
+  r = Uint8((color >> 16) & 0xff);
+  a = Uint8((color >> 24) & 0xff);
 }
 
-void App::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+void App::setColor(Uint8 a_r, Uint8 a_g, Uint8 a_b, Uint8 a_a)
 {
-  _b = b;
-  _g = g;
-  _r = r;
-  _a = a;
+  b = a_b;
+  g = a_g;
+  r = a_r;
+  a = a_a;
 }
 
-void App::setFlip(SDL_RendererFlip flip)
+void App::setFlip(SDL_RendererFlip a_flip)
 {
-  _flip = flip;
+  flip = a_flip;
 }
 
-void App::setBlend(bool blend)
+void App::setBlend(bool a_blend)
 {
-  _blend = blend;
+  blend = a_blend;
 }
 
 // save and restore user drawing context
@@ -68,12 +65,13 @@ void App::renderTile(int x, int y, int AtlasX, int atlasY)
 {
   toggleUserCtx(); // save
 
-  SDL_SetRenderDrawBlendMode(renderer, _blend ? SDL_BLENDMODE_BLEND : SDL_BLENDMODE_NONE);
-  SDL_SetRenderDrawColor(renderer, _r, _g, _b, _a);
+  const SDL_BlendMode mode = blend ? SDL_BLENDMODE_BLEND : SDL_BLENDMODE_NONE;
+  SDL_SetRenderDrawBlendMode(renderer, mode);
+  SDL_SetRenderDrawColor(renderer, r, g, b, a);
 
   const SDL_Rect src = {AtlasX, atlasY, 8, 8}, 
                  dst = {x, y, 8, 8};
-  SDL_RenderCopyEx(renderer, atlas, &src, &dst, 0, nullptr, _flip);
+  SDL_RenderCopyEx(renderer, atlas, &src, &dst, 0, nullptr, flip);
 
   toggleUserCtx(); // restore
 }
@@ -83,8 +81,9 @@ void App::renderText(int x, int y, const char *text, ...)
 {
   toggleUserCtx();
 
-  SDL_SetRenderDrawBlendMode(renderer, _blend ? SDL_BLENDMODE_BLEND : SDL_BLENDMODE_NONE);
-  SDL_SetRenderDrawColor(renderer, _r, _g, _b, _a);
+  const SDL_BlendMode mode = blend ? SDL_BLENDMODE_BLEND : SDL_BLENDMODE_NONE;
+  SDL_SetRenderDrawBlendMode(renderer, mode);
+  SDL_SetRenderDrawColor(renderer, r, g, b, a);
 
   static char buffer[1024];
   va_list args;

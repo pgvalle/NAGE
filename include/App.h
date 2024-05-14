@@ -5,22 +5,28 @@
 
 namespace App
 {
-  /**
-   * Setup app
-   * sfxPath: path to a directory
-   */
-  struct Config
-  {
-    const char *title = "Application";
-    const char *atlasPath, *fontPath, *sfxPath;
-    int fps = 30;
-    int tileSize = 8, wTiles = 32, hTiles = 30;
-  };
+  void init();
+  void quit();
 
-  void configure(const Config &conf);
-  void terminate();
   // scene is owned by app
   void run(Scene *scene);
+
+  /**
+   * PROPERTIES
+   */
+
+  void setTitle(const char *title);
+  void setIcon(const char *path);
+  void setDimensions(int wTiles, int hTiles, int tileSize = 8);
+  void setFPS(int fps);
+
+  /**
+   * ASSETS 
+   */
+
+  void loadAtlas(const char *path);
+  void loadFont(const char *path);
+  void loadSFXs(const char *path);
 
   /**
    * EVENT API
