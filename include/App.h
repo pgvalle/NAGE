@@ -44,8 +44,11 @@ namespace App
     return SDL_PushEvent((SDL_Event *)&event);
   }
 
-  // offset is given in bytes
-  #define getUserEventData(event, dtype, offset) (*(dtype *)(event.data1 + offset))
+  template<class T>
+  T getUserEventData(const SDL_UserEvent &event, size_t offset)
+  {
+    return *(T *)(event.data1 + offset);
+  }
 
   /**
    * RENDERING API
