@@ -23,7 +23,7 @@ FC_Font *font;
 int fps;
 int tileSize;
 
-void configure(const Config &conf)
+void App::configure(const Config &conf)
 {
   SDL_Init(SDL_INIT_EVERYTHING);
   TTF_Init();
@@ -71,7 +71,7 @@ void configure(const Config &conf)
   shouldClose = false;
 }
 
-void terminate()
+void App::terminate()
 {
   // audio assets
 
@@ -87,7 +87,7 @@ void terminate()
   SDL_Quit();
 }
 
-void run(Scene *scene)
+void App::run(Scene *scene)
 {
   assert(scene);
 
@@ -129,7 +129,7 @@ void run(Scene *scene)
   running = false;
 }
 
-bool pushUserEvent(int code, void *data, size_t dataLen)
+bool App::pushUserEvent(int code, void *data, size_t dataLen)
 {
   SDL_UserEvent event;
   event.type = SDL_USEREVENT;
