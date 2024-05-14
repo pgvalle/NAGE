@@ -33,6 +33,10 @@ void run(Scene *scene);
 EXTERN bool shouldClose;
 
 /**
+ * EVENT SIGNALING API
+ */
+
+/**
  * Send arbitrary data through events.
  * Data is copied and copy is owned by event.
  * If you want to push non-user events, use SDL_PushEvent directly.
@@ -40,16 +44,7 @@ EXTERN bool shouldClose;
 bool pushUserEvent(int code, void *data, size_t dataLen);
 void freeUserEventData(const SDL_UserEvent &event);
 
-#define USER_EVENT_GET_TYPE(T)\
-static inline T get##T##FromUserEvent(const SDL_UserEvent &event, size_t offset)\
-{\
-  return *(T *)(event.data1 + offset);\
-}
-
-USER_EVENT_GET_TYPE(Uint8);
-USER_EVENT_GET_TYPE(Uint16);
-USER_EVENT_GET_TYPE(Uint32);
-USER_EVENT_GET_TYPE(Uint64);
+#define userEventGetData(event, offset, type) (*(type *)(event.data1 + offset))
 
 /**
  * Rendering capabilities. Only apply to things offered by this library.
