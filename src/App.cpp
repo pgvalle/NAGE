@@ -152,3 +152,25 @@ void run(Scene *scene)
 
   running = false;
 }
+
+bool pushUserEvent(int code, void *data, size_t dataLen)
+{
+  void *copy = malloc(dataLen);
+  memcpy(copy, data, dataLen);
+
+  SDL_UserEvent event;
+  event.type = SDL_USEREVENT;
+  event.code = code;
+  event.data1 = copy;
+
+  return (bool)SDL_PushEvent((SDL_UserEvent *)&event);
+}
+
+void freeUserEventData(SDL_UserEvent &event)
+{
+  if (event.data1)
+  {
+    free(event.data1);
+    data1 = nullptr;
+  }
+}

@@ -29,18 +29,22 @@ void terminate();
 // scene is owned by app
 void run(Scene *scene);
 
-/**
- * Push a user defined event holding arbitrary data.
- * The memory is copied, so don't worry. The copy is owned by the event.
- * To free the data held by the event, call freeUserEventData.
- * NOTE: sizeof(data) is up to you to remember
-*/
-void pushUserEvent(int code, void *data, size_t dataSize);
-// Allocator-carefree manner to free event data.
-void freeUserEventData(const SDL_UserEvent &event);
-
 // so that scenes can close app
 EXTERN bool shouldClose;
+
+/**
+ * Send arbitrary data through events.
+ * Data is copied and copy is owned by event.
+ * If you want to push non-user events, use SDL_PushEvent directly.
+ */
+bool pushEvent(int code, void *data, size_t dataLen);
+void freeEventData(SDL_UserEvent &event);
+
+#define USER_EVENT_GET_TYPE(T)\
+static inline T get##T##FromUserEvent(const SDL_UserEvent &event, size_t offset)\
+{\
+  return *(T *)(event.data1 + offset);\
+}
 
 /**
  * Rendering capabilities. Only apply to things offered by this library.
