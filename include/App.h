@@ -44,7 +44,7 @@ EXTERN bool shouldClose;
 bool pushUserEvent(int code, void *data, size_t dataLen);
 void freeUserEventData(const SDL_UserEvent &event);
 
-#define userEventGetData(event, offset, type) (*(type *)(event.data1 + offset))
+#define getUserEventData(event, dtype, offset) (*(dtype *)(event.data1 + offset))
 
 /**
  * Rendering capabilities. Only apply to things offered by this library.
