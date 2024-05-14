@@ -24,7 +24,7 @@ Uint8 _r = 0,
 SDL_RendererFlip _flip = SDL_FLIP_NONE;
 bool _blend = false;
 
-void setColor(Uint32 color)
+void App::setColor(Uint32 color)
 {
   _b = Uint8((color >>  0) & 0xff);
   _g = Uint8((color >>  8) & 0xff);
@@ -32,7 +32,7 @@ void setColor(Uint32 color)
   _a = Uint8((color >> 24) & 0xff);
 }
 
-void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+void App::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
   _b = b;
   _g = g;
@@ -40,12 +40,12 @@ void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
   _a = a;
 }
 
-void setFlip(SDL_RendererFlip flip)
+void App::setFlip(SDL_RendererFlip flip)
 {
   _flip = flip;
 }
 
-void setBlend(bool blend)
+void App::setBlend(bool blend)
 {
   _blend = blend;
 }
@@ -71,7 +71,7 @@ void toggleUserCtx()
   userCtxOn = !userCtxOn;
 }
 
-void renderTile(int x, int y, int AtlasX, int atlasY)
+void App::renderTile(int x, int y, int AtlasX, int atlasY)
 {
   toggleUserCtx(); // save
 
@@ -86,7 +86,7 @@ void renderTile(int x, int y, int AtlasX, int atlasY)
 }
 
 
-void renderText(int x, int y, const char *text, ...)
+void App::renderText(int x, int y, const char *text, ...)
 {
   toggleUserCtx();
 
