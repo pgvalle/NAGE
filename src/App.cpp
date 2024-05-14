@@ -31,7 +31,7 @@ void App::init()
   SDL_RenderSetVSync(renderer, false);
 }
 
-void quit()
+void App::quit()
 {
   SDL_DestroyTexture(atlas);
   FC_FreeFont(font);
