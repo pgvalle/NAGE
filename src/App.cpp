@@ -15,10 +15,6 @@
 
 #include <vector>
 
-SDL_Window *window;
-int fps;
-int tileSize;
-
 /**
  * Renderer.cpp
  */
@@ -27,7 +23,9 @@ extern SDL_Renderer *renderer;
 extern SDL_Texture *atlas;
 extern FC_Font *font;
 
-
+SDL_Window *window;
+int fps;
+int tileSize;
 
 void App::configure(const Config &conf)
 {
