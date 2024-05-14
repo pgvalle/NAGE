@@ -107,6 +107,12 @@ void App::run(Scene *scene)
     if (SDL_WaitEventTimeout(&event, msPerFrame))
     {
       scene->processEvent(event);
+
+      // free user events data. They were already processed
+      if (event.type == SDL_USEREVENT)
+      {
+        free(event.user.data1);
+      }
     }
 
     scene->render(renderer);
