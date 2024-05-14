@@ -37,8 +37,8 @@ EXTERN bool shouldClose;
  * Data is copied and copy is owned by event.
  * If you want to push non-user events, use SDL_PushEvent directly.
  */
-bool pushEvent(int code, void *data, size_t dataLen);
-void freeEventData(SDL_UserEvent &event);
+bool pushUserEvent(int code, void *data, size_t dataLen);
+void freeUserEventData(SDL_UserEvent &event);
 
 #define USER_EVENT_GET_TYPE(T)\
 static inline T get##T##FromUserEvent(const SDL_UserEvent &event, size_t offset)\
