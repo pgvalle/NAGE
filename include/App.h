@@ -37,18 +37,18 @@ EXTERN bool shouldClose;
  */
 
 /**
- * Send arbitrary data through events.
  * Data is copied and copy is owned by event.
  * If you want to push non-user events, use SDL_PushEvent directly.
  */
 bool pushUserEvent(int code, void *data, size_t dataLen);
 void freeUserEventData(const SDL_UserEvent &event);
 
+// offset is given in bytes
 #define getUserEventData(event, dtype, offset) (*(dtype *)(event.data1 + offset))
 
 /**
- * Rendering capabilities. Only apply to things offered by this library.
- * If you use renderer directly, this will not affect it.
+ * RENDERING API
+ * Just worry about using SDL_Renderer directly if you're thinking of using multithreading.
  */
 
 // 0xAARRGGBB
