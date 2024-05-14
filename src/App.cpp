@@ -131,13 +131,15 @@ void run(Scene *scene)
 
 bool pushUserEvent(int code, void *data, size_t dataLen)
 {
-  void *copy = malloc(dataLen);
-  memcpy(copy, data, dataLen);
-
   SDL_UserEvent event;
   event.type = SDL_USEREVENT;
   event.code = code;
-  event.data1 = copy;
+
+  if (data && dataLen > 0)
+  {
+    void *copy = malloc(dataLen);
+    event.data1 = memcpy(copy, data, dataLen);
+  }
 
   return (bool)SDL_PushEvent((SDL_Event *)&event);
 }
