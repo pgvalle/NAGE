@@ -16,12 +16,18 @@
 #include <vector>
 
 SDL_Window *window;
-SDL_Renderer *renderer;
-// assets
-SDL_Texture *atlas;
-FC_Font *font;
 int fps;
 int tileSize;
+
+/**
+ * Renderer.cpp
+ */
+
+extern SDL_Renderer *renderer;
+extern SDL_Texture *atlas;
+extern FC_Font *font;
+
+
 
 void App::configure(const Config &conf)
 {

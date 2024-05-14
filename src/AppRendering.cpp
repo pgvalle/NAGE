@@ -4,17 +4,9 @@
 
 #include <SDL_FontCache/SDL_FontCache.h>
 
-/**
- * External dependencies
- */
-
-extern SDL_Renderer *renderer;
-extern SDL_Texture *atlas;
-extern FC_Font *font;
-
-/**
- * Internals
- */
+SDL_Renderer *renderer;
+SDL_Texture *atlas;
+FC_Font *font;
 
 Uint8 _r = 0,
       _g = 0,
@@ -22,6 +14,7 @@ Uint8 _r = 0,
       _a = 0xff;
 
 SDL_RendererFlip _flip = SDL_FLIP_NONE;
+
 bool _blend = false;
 
 void App::setColor(Uint32 color)
