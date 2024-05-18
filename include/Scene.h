@@ -20,11 +20,7 @@
  */
 class Scene
 {
-protected:
-  Scene *parent;
-
 public:
-  Scene(Scene *a_parent = nullptr) : parent(a_parent) {}
   virtual ~Scene() {}
 
   virtual void processEvent(const SDL_Event &event) = 0;
