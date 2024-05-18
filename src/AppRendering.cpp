@@ -12,7 +12,7 @@ Uint8 r = 0,
 
 SDL_RendererFlip flip = SDL_FLIP_NONE;
 
-bool blend = false;
+SDL_BlendMode blend = SDL_BLENDMODE_NONE;
 
 void App::setColor(Uint32 color)
 {
@@ -37,7 +37,7 @@ void App::setFlip(SDL_RendererFlip a_flip)
 
 void App::setBlend(bool a_blend)
 {
-  blend = a_blend;
+  blend = blend ? SDL_BLENDMODE_BLEND : SDL_BLENDMODE_NONE;
 }
 
 // save and restore user drawing context
@@ -49,8 +49,13 @@ void toggleUserCtx()
   static bool userCtxOn = true; // first call is to save user ctx
   if (userCtxOn)
   {
+    // save
     SDL_GetRenderDrawBlendMode(renderer, &usrBlend);
     SDL_GetRenderDrawColor(renderer, &usrR, &usrG, &usrB, &usrA);
+
+    // set to options here
+    SDL_SetRenderDrawBlendMode(renderer, blend);
+    SDL_SetRenderDrawColor(renderer, r, g, b, a);
   }
   else
   {
@@ -61,29 +66,53 @@ void toggleUserCtx()
   userCtxOn = !userCtxOn;
 }
 
-void App::renderTile(int x, int y, int AtlasX, int atlasY)
+void App::renderTile(int x, int y, int atlasX, int atlasY)
 {
   toggleUserCtx(); // save
 
-  const SDL_BlendMode mode = blend ? SDL_BLENDMODE_BLEND : SDL_BLENDMODE_NONE;
-  SDL_SetRenderDrawBlendMode(renderer, mode);
-  SDL_SetRenderDrawColor(renderer, r, g, b, a);
-
-  const SDL_Rect src = {AtlasX, atlasY, 8, 8}, 
+  const SDL_Rect src = {atlasX, atlasY, 8, 8}, 
                  dst = {x, y, 8, 8};
   SDL_RenderCopyEx(renderer, atlas, &src, &dst, 0, nullptr, flip);
 
   toggleUserCtx(); // restore
 }
 
+void App::renderTile(int x, int y, int id)
+{
+  // get atlas width
+  int atlasW;
+  SDL_QueryTexture(atlas, nullptr, nullptr, &atlasW, nullptr);
+
+  // map index to position
+  const int a = 8 * (id % (atlasW / 8)),
+            b = 8 * (id / (atlasW / 8));
+  renderTile(x, y, a, b);
+}
+
+void App::renderMetaTile(int x, int y, const int ids[4])
+{
+  toggleUserCtx(); // save
+
+  // get atlas width
+  int atlasW;
+  SDL_QueryTexture(atlas, nullptr, nullptr, &atlasW, nullptr);
+
+  for (int i = 0; i < 4; i++) {
+    // map index to position
+    const int a = 8 * (ids[i] % (atlasW / 8)),
+              b = 8 * (ids[i] / (atlasW / 8));
+    
+    const SDL_Rect src = {a, b, 8, 8}, 
+                   dst = {x, y, 8, 8};
+    SDL_RenderCopyEx(renderer, atlas, &src, &dst, 0, nullptr, flip);
+  }
+
+  toggleUserCtx(); // restore
+}
 
 void App::renderText(int x, int y, const char *text, ...)
 {
-  toggleUserCtx();
-
-  const SDL_BlendMode mode = blend ? SDL_BLENDMODE_BLEND : SDL_BLENDMODE_NONE;
-  SDL_SetRenderDrawBlendMode(renderer, mode);
-  SDL_SetRenderDrawColor(renderer, r, g, b, a);
+  toggleUserCtx(); // save
 
   static char buffer[1024];
   va_list args;
@@ -92,5 +121,5 @@ void App::renderText(int x, int y, const char *text, ...)
   va_end(args);
   FC_Draw(font, renderer, x, y, buffer);
 
-  toggleUserCtx();
+  toggleUserCtx(); // restore
 }

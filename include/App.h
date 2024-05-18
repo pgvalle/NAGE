@@ -65,7 +65,10 @@ namespace App
   // to use palettes
   void setBlend(bool blend);
 
-  void renderTile(int x, int y, int AtlasX, int atlasY);
+  void renderTile(int x, int y, int atlasX, int atlasY);
+  void renderTile(int x, int y, int id);
+  void renderMetaTile(int x, int y, const int ids[4]);
+
   void renderText(int x, int y, const char *text, ...);
 }
 
