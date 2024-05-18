@@ -3,6 +3,8 @@
 
 #include "Scene.h"
 
+#include <array>
+
 namespace App
 {
   void init();
@@ -67,7 +69,7 @@ namespace App
 
   void renderTile(int x, int y, int atlasX, int atlasY);
   void renderTile(int x, int y, int id);
-  void renderMetaTile(int x, int y, const int ids[4]);
+  void renderMetaTile(int x, int y, const std::array<int, 4> &ids);
 
   void renderText(int x, int y, const char *text, ...);
 }
