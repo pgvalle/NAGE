@@ -63,6 +63,11 @@ void App::run(Scene *scene)
     SDL_Event event;
     if (SDL_WaitEventTimeout(&event, msPerFrame))
     {
+      if (event.type == SDL_QUIT)
+      {
+        break;
+      }
+
       scene->processEvent(event);
 
       // free user events data. They were already processed
