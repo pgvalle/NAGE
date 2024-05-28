@@ -89,27 +89,6 @@ void App::renderTile(int x, int y, int id)
   renderTile(x, y, a, b);
 }
 
-void App::renderMetaTile(int x, int y, const std::array<int, 4> &ids)
-{
-  toggleUserCtx(); // save
-
-  // get atlas width
-  int atlasW;
-  SDL_QueryTexture(atlas, nullptr, nullptr, &atlasW, nullptr);
-
-  for (int id : ids) {
-    // map index to position
-    const int a = 8 * (id % (atlasW / 8)),
-              b = 8 * (id / (atlasW / 8));
-    
-    const SDL_Rect src = {a, b, 8, 8}, 
-                   dst = {x, y, 8, 8};
-    SDL_RenderCopyEx(renderer, atlas, &src, &dst, 0, nullptr, flip);
-  }
-
-  toggleUserCtx(); // restore
-}
-
 void App::renderText(int x, int y, const char *text, ...)
 {
   toggleUserCtx(); // save

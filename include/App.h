@@ -31,29 +31,34 @@ namespace App
   void loadSFXs(const char *path);
 
   /**
-   * EVENT API
+   * EVENT
    */
 
-  #define SCENE_CHANGE 0xfacada
+  static inline bool pushEvent(const SDL_Event &event)
+  {
+    return SDL_PushEvent((SDL_Event *)&event);
+  }
 
   /**
    * The data is copied, saved in userevent.data1 and the event owns the copy.
    * Be aware that if an user defined event isn't processed, it will be discarted.
    */
   bool pushUserEvent(int code, void *data, size_t dataLen);
-  static inline bool pushEvent(const SDL_Event &event)
+
+  template <class T>
+  static inline bool pushUserEvent(int code, const T &value)
   {
-    return SDL_PushEvent((SDL_Event *)&event);
+    return pushUserEvent(code, &value, sizeof(T));
   }
 
-  template<class T>
+  template <class T>
   static inline T getUserEventData(const SDL_UserEvent &event, size_t offset = 0)
   {
     return *(T *)((Uint8 *)event.data1 + offset);
   }
 
   /**
-   * RENDERING API
+   * RENDERING
    * Just worry about using SDL_Renderer directly if you're thinking of using threads.
    */
 
@@ -69,8 +74,6 @@ namespace App
 
   void renderTile(int x, int y, int atlasX, int atlasY);
   void renderTile(int x, int y, int id);
-  void renderMetaTile(int x, int y, const std::array<int, 4> &ids);
-
   void renderText(int x, int y, const char *text, ...);
 }
 
