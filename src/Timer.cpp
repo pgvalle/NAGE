@@ -1,4 +1,4 @@
-#include "Timer.h"
+#include "NAGE.h"
 
 using namespace NAGE;
 

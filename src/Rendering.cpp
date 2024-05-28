@@ -1,5 +1,5 @@
-#include "App.h"
-#include "AppGlobals.h"
+#include "NAGE.h"
+#include "Globals.h"
 
 #include <cstdarg>
 

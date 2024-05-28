@@ -1,8 +1,8 @@
 // no need to redeclare app fields here!
 #define EXTERN
 
-#include "App.h"
-#include "AppGlobals.h"
+#include "NAGE.h"
+#include "Globals.h"
 
 #include <ctime>
 #include <cstdio>
@@ -19,13 +19,16 @@ void NAGE::init()
   TTF_Init();
   IMG_Init(IMG_INIT_PNG);
 
-  srand(time(nullptr));
+  srand(time(nullptr));  // good pseudo-random number generation
 
   window = SDL_CreateWindow(
-      "Application",
-      SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-      50 * tileSize, 28 * tileSize,
-      SDL_WINDOW_RESIZABLE);
+    "NAGE App",
+    SDL_WINDOWPOS_CENTERED,
+    SDL_WINDOWPOS_CENTERED,
+    50 * tileSize,
+    28 * tileSize,
+    SDL_WINDOW_RESIZABLE
+  );
 
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   SDL_RenderSetVSync(renderer, false);

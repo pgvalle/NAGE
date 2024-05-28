@@ -1,5 +1,5 @@
-#include "App.h"
-#include "AppGlobals.h"
+#include "NAGE.h"
+#include "Globals.h"
 
 #include <SDL_image.h>
 //#include <SDL_mixer.h>
@@ -20,7 +20,7 @@ void NAGE::loadFont(const char *path)
   FC_LoadFont(font, renderer, path, tileSize, white, TTF_STYLE_NORMAL);
 }
 
-void NAGE::loadSFXs(const char *path)
+void NAGE::loadSFX(const char *path)
 {
   // TODO: implement me
 }

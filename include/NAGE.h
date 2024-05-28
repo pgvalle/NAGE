@@ -1,38 +1,57 @@
-#ifndef _APP_
-#define _APP_
+#ifndef _NAGE_
+#define _NAGE_
 
-#include "Scene.h"
-
-#include <array>
+#include <SDL.h>
 
 namespace NAGE
 {
+  class Timer
+  {
+  private:
+    float elapsed = 0, timeout = 0;
+
+  public:
+    bool hasTimedOut() const
+    {
+      return timeout <= elapsed;
+    }
+
+    void update(float delta);
+    void reset(float newTimeout = 0);
+  };
+
+
+  class Scene
+  {
+    public:
+      virtual ~Scene() {}
+
+      virtual void processEvent(const SDL_Event &event) = 0;
+      virtual void update(float delta) = 0;
+      virtual void render(SDL_Renderer *renderer) = 0;
+  };
+
+
   void init();
   void quit();
 
   // scene is owned by app
   void run(Scene *scene);
 
-  /**
-   * PROPERTIES
-   */
+  /* PROPERTIES */
 
   void setTitle(const char *title);
   void setIcon(const char *path);
   void setDimensions(int wTiles, int hTiles, int tileSize = 8);
   void setFPS(int fps);
 
-  /**
-   * ASSETS 
-   */
+  /* ASSETS */
 
   void loadAtlas(const char *path);
   void loadFont(const char *path);
-  void loadSFXs(const char *path);
+  void loadSFX(const char *path);
 
-  /**
-   * EVENT
-   */
+  /* EVENT */
 
   /**
    * The data is copied, saved in userevent.data1 and the event owns the copy.
@@ -52,24 +71,19 @@ namespace NAGE
     return *(T *)((Uint8 *)event.data1 + offset);
   }
 
-  /**
-   * RENDERING
-   * Just worry about using SDL_Renderer directly if you're thinking of using threads.
-   */
+  // RENDERING
+  // Just worry about using SDL_Renderer directly if you're thinking of using threads.
 
-  // 0xAARRGGBB
-  void setColor(Uint32 color);
+  void setColor(Uint32 color);  // 0xAARRGGBB
   void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255);
 
-  // See SDL_RendererFlip enum to know more
-  void setFlip(SDL_RendererFlip flip);
+  void setFlip(SDL_RendererFlip flip);  // See SDL_RendererFlip enum to know more
 
-  // to use palettes
-  void setBlend(bool blend);
+  void setBlend(bool blend);  // to use palettes
 
   void renderTile(int x, int y, int atlasX, int atlasY);
   void renderTile(int x, int y, int id);
   void renderText(int x, int y, const char *text, ...);
 }
 
-#endif /* _APP_ */
+#endif /* _NAGE_ */
