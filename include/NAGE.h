@@ -23,12 +23,12 @@ namespace NAGE
 
   class Scene
   {
-    public:
-      virtual ~Scene() {}
+  public:
+    virtual ~Scene() {}
 
-      virtual void processEvent(const SDL_Event &event) = 0;
-      virtual void update(float delta) = 0;
-      virtual void render(SDL_Renderer *renderer) = 0;
+    virtual void processEvent(const SDL_Event &event) = 0;
+    virtual void update(float delta) = 0;
+    virtual void render(SDL_Renderer *renderer) = 0;
   };
 
 
@@ -57,16 +57,16 @@ namespace NAGE
    * The data is copied, saved in userevent.data1 and the event owns the copy.
    * Be aware that if an user defined event isn't processed, it will be discarted.
    */
-  bool pushEvent(int code, const void *data, size_t dataLen);
+  bool pushUserEvent(int code, const void *data, size_t dataLen);
 
   template <class T>
-  static inline bool pushEvent(int code, const T &value)
+  static inline bool pushUserEvent(int code, const T &value)
   {
     return pushEvent(code, &value, sizeof(T));
   }
 
   template <class T>
-  static inline T getEventData(const SDL_UserEvent &event, size_t offset = 0)
+  static inline T getUserEventData(const UserEvent &event, size_t offset = 0)
   {
     return *(T *)((Uint8 *)event.data1 + offset);
   }
