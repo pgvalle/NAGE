@@ -1,19 +1,19 @@
 #include "App.h"
 #include "AppGlobals.h"
 
-void App::setTitle(const char *title)
+void NAGE::setTitle(const char *title)
 {
   SDL_SetWindowTitle(window, title);
 }
 
-void App::setIcon(const char *path)
+void NAGE::setIcon(const char *path)
 {
   SDL_Surface *temp = SDL_LoadBMP(path);
   SDL_SetWindowIcon(window, temp);
   SDL_FreeSurface(temp);
 }
 
-void App::setDimensions(int wTiles, int hTiles, int a_tileSize)
+void NAGE::setDimensions(int wTiles, int hTiles, int a_tileSize)
 {
   tileSize = a_tileSize;
 
@@ -23,7 +23,7 @@ void App::setDimensions(int wTiles, int hTiles, int a_tileSize)
   SDL_RenderSetLogicalSize(renderer, w, h);
 }
 
-void App::setFPS(int a_fps)
+void NAGE::setFPS(int a_fps)
 {
   fps = a_fps;
 }

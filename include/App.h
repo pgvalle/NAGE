@@ -5,7 +5,7 @@
 
 #include <array>
 
-namespace App
+namespace NAGE
 {
   void init();
   void quit();
@@ -34,25 +34,20 @@ namespace App
    * EVENT
    */
 
-  static inline bool pushEvent(const SDL_Event &event)
-  {
-    return SDL_PushEvent((SDL_Event *)&event);
-  }
-
   /**
    * The data is copied, saved in userevent.data1 and the event owns the copy.
    * Be aware that if an user defined event isn't processed, it will be discarted.
    */
-  bool pushUserEvent(int code, void *data, size_t dataLen);
+  bool pushEvent(int code, const void *data, size_t dataLen);
 
   template <class T>
-  static inline bool pushUserEvent(int code, const T &value)
+  static inline bool pushEvent(int code, const T &value)
   {
-    return pushUserEvent(code, &value, sizeof(T));
+    return pushEvent(code, &value, sizeof(T));
   }
 
   template <class T>
-  static inline T getUserEventData(const SDL_UserEvent &event, size_t offset = 0)
+  static inline T getEventData(const SDL_UserEvent &event, size_t offset = 0)
   {
     return *(T *)((Uint8 *)event.data1 + offset);
   }

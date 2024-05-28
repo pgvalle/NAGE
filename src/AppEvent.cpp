@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 
-bool App::pushUserEvent(int code, void *data, size_t dataLen)
+bool NAGE::pushEvent(int code, const void *data, size_t dataLen)
 {
   SDL_UserEvent event;
   event.type = SDL_USEREVENT;

@@ -5,14 +5,14 @@
 //#include <SDL_mixer.h>
 #include <SDL_FontCache/SDL_FontCache.h>
 
-void App::loadAtlas(const char *path)
+void NAGE::loadAtlas(const char *path)
 {
   SDL_Surface *temp = IMG_Load(path);
   atlas = SDL_CreateTextureFromSurface(renderer, temp);
   SDL_FreeSurface(temp);
 }
 
-void App::loadFont(const char *path)
+void NAGE::loadFont(const char *path)
 {
   font = FC_CreateFont();
 
@@ -20,7 +20,7 @@ void App::loadFont(const char *path)
   FC_LoadFont(font, renderer, path, tileSize, white, TTF_STYLE_NORMAL);
 }
 
-void App::loadSFXs(const char *path)
+void NAGE::loadSFXs(const char *path)
 {
   // TODO: implement me
 }

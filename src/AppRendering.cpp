@@ -14,7 +14,7 @@ SDL_RendererFlip flip = SDL_FLIP_NONE;
 
 SDL_BlendMode blend = SDL_BLENDMODE_NONE;
 
-void App::setColor(Uint32 color)
+void NAGE::setColor(Uint32 color)
 {
   b = Uint8((color >>  0) & 0xff);
   g = Uint8((color >>  8) & 0xff);
@@ -22,7 +22,7 @@ void App::setColor(Uint32 color)
   a = Uint8((color >> 24) & 0xff);
 }
 
-void App::setColor(Uint8 a_r, Uint8 a_g, Uint8 a_b, Uint8 a_a)
+void NAGE::setColor(Uint8 a_r, Uint8 a_g, Uint8 a_b, Uint8 a_a)
 {
   b = a_b;
   g = a_g;
@@ -30,12 +30,12 @@ void App::setColor(Uint8 a_r, Uint8 a_g, Uint8 a_b, Uint8 a_a)
   a = a_a;
 }
 
-void App::setFlip(SDL_RendererFlip a_flip)
+void NAGE::setFlip(SDL_RendererFlip a_flip)
 {
   flip = a_flip;
 }
 
-void App::setBlend(bool a_blend)
+void NAGE::setBlend(bool a_blend)
 {
   blend = blend ? SDL_BLENDMODE_BLEND : SDL_BLENDMODE_NONE;
 }
@@ -66,7 +66,7 @@ void toggleUserCtx()
   userCtxOn = !userCtxOn;
 }
 
-void App::renderTile(int x, int y, int atlasX, int atlasY)
+void NAGE::renderTile(int x, int y, int atlasX, int atlasY)
 {
   toggleUserCtx(); // save
 
@@ -77,7 +77,7 @@ void App::renderTile(int x, int y, int atlasX, int atlasY)
   toggleUserCtx(); // restore
 }
 
-void App::renderTile(int x, int y, int id)
+void NAGE::renderTile(int x, int y, int id)
 {
   // get atlas width
   int atlasW;
@@ -89,7 +89,7 @@ void App::renderTile(int x, int y, int id)
   renderTile(x, y, a, b);
 }
 
-void App::renderText(int x, int y, const char *text, ...)
+void NAGE::renderText(int x, int y, const char *text, ...)
 {
   toggleUserCtx(); // save
 

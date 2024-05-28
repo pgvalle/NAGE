@@ -1,5 +1,7 @@
 #include "Timer.h"
 
+using namespace NAGE;
+
 void Timer::update(float delta)
 {
   if (elapsed < timeout)

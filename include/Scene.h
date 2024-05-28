@@ -3,14 +3,17 @@
 
 #include <SDL.h>
 
-class Scene
+namespace NAGE
 {
-public:
-  virtual ~Scene() {}
+  class Scene
+  {
+    public:
+      virtual ~Scene() {}
 
-  virtual void processEvent(const SDL_Event &event) = 0;
-  virtual void update(float delta) = 0;
-  virtual void render(SDL_Renderer *renderer) = 0;
-};
+      virtual void processEvent(const SDL_Event &event) = 0;
+      virtual void update(float delta) = 0;
+      virtual void render(SDL_Renderer *renderer) = 0;
+  };
+}
 
 #endif /* _SCENE_ */

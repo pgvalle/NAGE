@@ -13,7 +13,7 @@
 #include <SDL_image.h>
 #include <SDL_FontCache/SDL_FontCache.h>
 
-void App::init()
+void NAGE::init()
 {
   SDL_Init(SDL_INIT_EVERYTHING);
   TTF_Init();
@@ -31,7 +31,7 @@ void App::init()
   SDL_RenderSetVSync(renderer, false);
 }
 
-void App::quit()
+void NAGE::quit()
 {
   SDL_DestroyTexture(atlas);
   FC_FreeFont(font);
@@ -44,7 +44,7 @@ void App::quit()
   SDL_Quit();
 }
 
-void App::run(Scene *scene)
+void NAGE::run(Scene *scene)
 {
   assert(scene);
 
