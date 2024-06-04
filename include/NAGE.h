@@ -8,7 +8,7 @@ namespace NAGE
   class Timer
   {
   private:
-    float elapsed = 0, timeout = 0;
+    float elapsed = 0, timeout = 0, last = 0;
 
   public:
     bool hasTimedOut() const
@@ -16,7 +16,7 @@ namespace NAGE
       return timeout <= elapsed;
     }
 
-    void update(float delta);
+    float update();
     void reset(float newTimeout = 0);
   };
 
