@@ -66,7 +66,7 @@ namespace NAGE
   }
 
   template <class T>
-  static inline T getUserEventData(const UserEvent &event, size_t offset = 0)
+  static inline T getUserEventData(const SDL_UserEvent &event, size_t offset = 0)
   {
     return *(T *)((Uint8 *)event.data1 + offset);
   }
